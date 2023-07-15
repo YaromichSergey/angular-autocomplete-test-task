@@ -1,0 +1,163 @@
+<div class="form-wrapper">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h3>Create User</h3>
+    <div>
+      <label>First Name
+        <div class="input-wrapper">
+          <input
+            type="text"
+            formControlName="firstName"
+            class="input-text"
+            [ngClass]="{'input-error' : message['firstName']}"
+            placeholder="First Name"
+          />
+        </div>
+        <span class="error-message" *ngIf="message && message['firstName']">
+          {{ message.firstName }}
+        </span>
+      </label>
+    </div>
+    <div>
+      <label>Last Name
+        <div class="input-wrapper">
+          <input
+            type="text"
+            formControlName="lastName"
+            class="input-text"
+            [ngClass]="{'input-error' : message['lastName']}"
+            placeholder="Last Name"
+          />
+        </div>
+        <span class="error-message" *ngIf="message && message['lastName']">
+          {{ message.lastName }}
+        </span>
+      </label>
+    </div>
+    <div>
+      <label>Email
+        <div class="input-wrapper">
+          <input
+            type="text"
+            formControlName="email"
+            class="input-text"
+            [ngClass]="{'input-error' : message['email']}"
+            placeholder="Email address"
+          />
+        </div>
+        <span class="error-message" *ngIf="message && message['email']">
+          {{ message.email }}
+        </span>
+      </label>
+    </div>
+    <div formGroupName="address">
+      <h3>Address</h3>
+      <div>
+        <label>Line One
+          <div class="input-wrapper">
+            <input
+              type="text"
+              formControlName="lineOne"
+              class="input-text"
+              [ngClass]="{'input-error' : message['lineOne']}"
+              placeholder="Enter address line one"
+            />
+          </div>
+          <span class="error-message" *ngIf="message && message['lineOne']">
+          {{ message.lineOne }}
+        </span>
+        </label>
+      </div>
+      <div>
+        <label>Line Two
+          <div class="input-wrapper">
+            <input
+              type="text"
+              formControlName="lineTwo"
+              class="input-text"
+              [ngClass]="{'input-error' : message['lineTwo']}"
+              placeholder="Enter address line two"
+            />
+          </div>
+          <span class="error-message" *ngIf="message && message['lineTwo']">
+          {{ message.lineTwo }}
+        </span>
+        </label>
+      </div>
+      <div>
+        <label>City
+          <div class="input-wrapper">
+              <input class="input-text"
+                     placeholder="Search..."
+                     formControlName="city"
+                     [ngClass]="{'input-error' : message['city']}"
+                     [libAutocomplete]="autocomplete">
+            <lib-autocomplete #autocomplete="libAutocomplete">
+              <ng-template libAutocompleteContent>
+                <ng-container>
+                  <lib-option *ngFor="let option of options$ | async" [value]="option.label">
+                    {{ option.label }}
+                  </lib-option>
+                  <lib-option class="no-result" *ngIf="!(options$ | async)?.length">No result...</lib-option>
+                </ng-container>
+              </ng-template>
+            </lib-autocomplete>
+          </div>
+          <span class="error-message" *ngIf="message && message['city']">
+            {{ message.city }}
+          </span>
+        </label>
+      </div>
+      <div>
+        <label>State
+          <div class="input-wrapper">
+            <input
+              type="text"
+              formControlName="state"
+              class="input-text"
+              [ngClass]="{'input-error' : message['state']}"
+              placeholder="State"
+            />
+          </div>
+          <span class="error-message" *ngIf="message && message['state']">
+            {{ message.state }}
+          </span>
+        </label>
+      </div>
+      <div>
+        <label>Country
+          <div class="input-wrapper">
+            <input class="input-text"
+                   placeholder="Search..."
+                   formControlName="country"
+                   [ngClass]="{'input-error' : message['country']}"
+                   [libAutocomplete]="autocompleteCountry">
+            <lib-autocomplete #autocompleteCountry="libAutocomplete">
+              <ng-template libAutocompleteContent>
+                <ng-container>
+                  <lib-option *ngFor="let option of countriesOptions$ | async" [value]="option.label">
+                    {{ option.label }}
+                  </lib-option>
+                  <lib-option class="no-result" *ngIf="!(countriesOptions$ | async)?.length">No result...</lib-option>
+                </ng-container>
+              </ng-template>
+            </lib-autocomplete>
+          </div>
+          <span class="error-message" *ngIf="message && message['country']">
+            {{ message.country }}
+          </span>
+        </label>
+      </div>
+    </div>
+    <div class="form-status">{{status}}</div>
+    <div>
+      <button
+        type="submit"
+        [ngClass]="{'invalid-btn': !userForm.valid }"
+        class="submit-btn"
+        [disabled]="!userForm.valid"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
